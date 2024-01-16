@@ -65,8 +65,8 @@
 
 
         //récupère et stocke les éléments body et ul
-        let body = document.querySelector("body");
         let myList = document.querySelector("ul");
+        let myTitle = document.querySelector("h2");
         
 
 
@@ -121,10 +121,8 @@
 
 
         // 2/ ajoute le titre récupéré dans mon json
-        let myH2 = document.createElement("h2");
         function title(jsonObj) {
-            myH2.textContent = jsonObj["squadName"];
-            body.appendChild(myH2);
+            myTitle.textContent = jsonObj["squadName"];
         }
 
 
