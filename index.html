@@ -114,7 +114,7 @@
             let heroes = jsonObj["members"];
             for (let i = 0; i < heroes.length; i++) {
                 let listItem = document.createElement("li");
-                listItem.textContent = heroes[i];
+                listItem.textContent = heroes[i].name;
                 myList.appendChild(listItem);
             }
         }
