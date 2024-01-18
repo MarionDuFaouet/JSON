@@ -16,7 +16,7 @@
 
     <script>
 
-        // //exo-1
+        // /exo-1
         // //Création d'une requête ajax
 
         // //créer un objet XMLHttpRequest
@@ -53,65 +53,103 @@
         // xhr.send();
 
 
-        /*
-        * exo 02
-        * transformer l'exo 01 en utilisant les promesses
-        * utiliser les données de retour de la requête pour construire
-        * une liste des membres de l'escouade pour la restituer à
-        * l'utilisateur par une modification du DOM.
-        * Créer un titre qui contiendra le nom de l'escouade
-        */
+        // /*
+        // * exo 02
+        // * transformer l'exo 01 en utilisant les promesses
+        // * utiliser les données de retour de la requête pour construire
+        // * une liste des membres de l'escouade pour la restituer à
+        // * l'utilisateur par une modification du DOM.
+        // * Créer un titre qui contiendra le nom de l'escouade
+        // */
+
+        // //ma promesse
+        // let ajax = new Promise((resolve, reject) => {
+        //     // Création de l'objet XMLHttpRequest
+        //     // XMLHttpRequest est une api!!! Appelée plus couramment XHR
+        //     let request = new XMLHttpRequest();
+        //     //initialisation requête. Lit les données de squad.json
+        //     request.open("GET", "http://localhost/JSON/squad.json");
+        //     //répond en format json
+        //     request.responseType = "json";
+        //     //ajoute un écouteur d'événement à request
+        //     //,vérifie et...
+        //     request.addEventListener("load", function () {
+        //         if (request.status === 200) {
+        //             resolve(request.response);
+        //         } else {
+        //             reject("Erreur du serveur : " + request.status);
+        //         }
+        //     }, false);
+        //     request.addEventListener("error", function () {
+        //         reject("La requête ajax a échoué");
+        //     }, false);
+        //     // ...envoie la requête
+        //     request.send();
+        // });
+
+
+        // //la méthode then est déclenchée par le résultat de vérif de ma fonction (if ou else)
+        // ajax.then(function (response) {
+        //     console.log("Response : %o", response);
+        //     //appelle les fonctions
+        //     title(response);
+        //     list(response);
+        // })
+        //     .catch(function (msg) {
+        //         console.log("Message d'erreur :", msg)
+        //     });
+
+
+        // // 1 / créé ma liste
+        // function list(jsonObj) {
+        //     //récupère les éléments 
+        //     let myList = document.querySelector("ul");
+        //     let heroes = jsonObj.members;
+
+        //     for (let i = 0; i < heroes.length; i++) {
+        //         let listItem = document.createElement("li");
+        //         listItem.textContent = heroes[i].name;
+        //         myList.appendChild(listItem);
+        //     }
+        // }
+
+
+        // // 2/ ajoute le titre récupéré dans mon json
+        // function title(jsonObj) {
+        //     //récupère l'élément h2 dans mon html
+        //     let myTitle = document.querySelector("h2");
+        //     myTitle.textContent = jsonObj.squadName;
+        // }
 
 
 
-        //récupère et stocke les éléments body et ul
-        let myList = document.querySelector("ul");
-        let myTitle = document.querySelector("h2");
-        
 
 
+        /* 
+         * exo3
+         * transformer l'exo 2
+         * pour utiliser l'api fetch
+         * fetch = aller chercher
+         */
 
-        //ma promesse
-        let ajax = new Promise((resolve, reject) => {
-            // Création de l'objet XMLHttpRequest
-            // XMLHttpRequest est une api!!! Appelée plus couramment XHR
-            let request = new XMLHttpRequest();
-            //initialisation requête. Lit les données de squad.json
-            request.open("GET", "http://localhost/JSON/squad.json");
-            //répond en format json
-            request.responseType = "json";
-            //ajoute un écouteur d'événement à request
-            //,vérifie et...
-            request.addEventListener("load", function () {
-                if (request.status === 200) {
-                    resolve(request.response);
-                } else {
-                    reject("Erreur du serveur : " + request.status);
-                }
-            }, false);
-            request.addEventListener("error", function () {
-                reject("La requête ajax a échoué");
-            }, false);
-            // ...envoie la requête
-            request.send();
-        });
+        //requête de récupération (bien plus rapide que la promesse)
+        fetch("http://localhost/JSON/squad.json")
+            .then(response => response.json())
 
-
-        //la méthode then est déclenchée par le résultat de vérif de ma fonction (if ou else)
-        ajax.then(function (response) {
-            console.log("Response : %o", response);
-            //appelle les fonctions
-            title(response);
-            list(response);
-        })
+            .then(function (response) {
+                title(response);
+                list(response);
+            })
             .catch(function (msg) {
                 console.log("Message d'erreur :", msg)
             });
 
-
         // 1 / créé ma liste
         function list(jsonObj) {
-            let heroes = jsonObj["members"];
+            //récupère les éléments 
+            let myList = document.querySelector("ul");
+            let heroes = jsonObj.members;
+
             for (let i = 0; i < heroes.length; i++) {
                 let listItem = document.createElement("li");
                 listItem.textContent = heroes[i].name;
@@ -119,11 +157,13 @@
             }
         }
 
-
         // 2/ ajoute le titre récupéré dans mon json
         function title(jsonObj) {
-            myTitle.textContent = jsonObj["squadName"];
+            //récupère l'élément h2 dans mon html
+            let myTitle = document.querySelector("h2");
+            myTitle.textContent = jsonObj.squadName;
         }
+
 
 
     </script>
